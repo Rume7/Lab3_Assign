@@ -8,12 +8,27 @@ public class ComplexNumber {
     
     private final double realPart;
     private final double imaginaryPart;
-    private static double angleOfNumber;                
-    private static double magnitudeOfNumber;
+    private double angleOfNumber;                
+    private double magnitudeOfNumber;
 
     public ComplexNumber(double realPart, double imaginaryPart) {
         this.realPart = realPart;
         this.imaginaryPart = imaginaryPart;
+        this.angleOfNumber = Math.atan2(this.imaginaryPart, this.realPart);
+        double sumOfSquares = Math.pow(realPart, 2) + Math.pow(imaginaryPart, 2);
+        this.magnitudeOfNumber = Math.sqrt(sumOfSquares);
+    }
+    
+    /**
+     * Write a method that converts a string of complex number into a ComplexNumber
+     * @param complexNum
+     */
+    public ComplexNumber(String complexNum) {
+        // Split the string into the real part and imaginary part
+        // Get the index of j
+        int indexOfJ = complexNum.indexOf("j");
+        this.imaginaryPart = Double.parseDouble(complexNum.substring(indexOfJ+1));
+        this.realPart = Double.parseDouble(complexNum.substring(0, indexOfJ-1));
         angleOfNumber = Math.atan2(this.imaginaryPart, this.realPart);
         double sumOfSquares = Math.pow(realPart, 2) + Math.pow(imaginaryPart, 2);
         magnitudeOfNumber = Math.sqrt(sumOfSquares);
@@ -22,17 +37,32 @@ public class ComplexNumber {
     /**
      * @return angle in radians 
      */
-    public static double angle() {
+    public double getAngle() {
+        return angleOfNumber;
+    }
+    
+    /**
+     * @return angle in radians 
+     * @param complexNum
+     */
+    public double getAangle(ComplexNumber complexNum) {
+        angleOfNumber = Math.atan2(complexNum.imaginaryPart, complexNum.realPart);
         return angleOfNumber;
     }
 
-    public static double magnitude() {
+    public double magnitude() {
         return magnitudeOfNumber;
     }
 
     public static double magnitude(ComplexNumber complex) {
         double result = Math.sqrt(Math.pow(complex.realPart, 2) + Math.pow(complex.imaginaryPart, 2));
         return result;
+    }
+    
+    public double getAngle(ComplexNumber complexNum) {
+        double real1 = complexNum.realPart;
+        double img1 = complexNum.imaginaryPart;
+        return Math.atan2(img1, real1);                 // convert to degrees
     }
 
     /**
@@ -120,11 +150,11 @@ public class ComplexNumber {
      * @return the answer in Complex Number
      */
     public ComplexNumber multiply(double angle, double magnitude) {
-        double totalMag = ComplexNumber.magnitude() * magnitude;
-        double totalAngle = ComplexNumber.angle() + angle;
-
-        double realPart1 = totalMag * Math.sin(totalAngle);            // Endeavour to set angle in radians
-        double imgPart1 = totalMag * Math.cos(totalAngle);          // Endeavour to set angle in radians
+        double totalMagnitude = this.magnitudeOfNumber * magnitude;
+        double totalAngle = this.angleOfNumber + angle;
+        
+        double realPart1 = totalMagnitude * Math.sin(totalAngle);            // Endeavour to set angle in radians
+        double imgPart1 = totalMagnitude * Math.cos(totalAngle);          // Endeavour to set angle in radians
 
         ComplexNumber complexNum = new ComplexNumber(realPart1, imgPart1);
         return complexNum;
@@ -137,8 +167,8 @@ public class ComplexNumber {
      * @return the answer in Complex Number
      */
     public ComplexNumber divide(double angle, double magnitude) {
-        double totalMag = ComplexNumber.magnitude() / magnitude;
-        double totalAngle = ComplexNumber.angle() - angle;
+        double totalMag = this.magnitudeOfNumber / magnitude;
+        double totalAngle = this.angleOfNumber - angle;
 
         double realPart1 = totalMag * Math.sin(totalAngle);             // Endeavour to set angle in radians
         double imgPart1 = totalMag * Math.cos(totalAngle);           // Endeavour to set angle in radians

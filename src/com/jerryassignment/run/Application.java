@@ -9,12 +9,13 @@ import java.util.Scanner;
  */
 public class Application {
     
+    private static ComplexNumber accumulator = new ComplexNumber(0, 0);
+    private static ComplexNumber result;
+    
     public static void main(String[] args) {
 
-        ComplexNumber accumulator;                    // To store result on console
-
-        accumulator = new ComplexNumber(0, 0);
-
+        //accumulator = new ComplexNumber(2, -3);
+        
         Scanner input = new Scanner(System.in);
         String console = input.nextLine();
 
@@ -24,42 +25,53 @@ public class Application {
         switch (operation) {
             case "add":
             case "+":
+                result = accumulator.add(new ComplexNumber(splitted[2]));
                 break;
             case "subtract":
             case "-":
+                result = accumulator.subtract(new ComplexNumber(splitted[2]));
                 break;
             case "multiply":
             case "*":
+                accumulator.multiply(new ComplexNumber(splitted[2]));
                 break;
             case "divide":
             case "/":
+                result = accumulator.divide(new ComplexNumber(splitted[2]));
                 break;
             case "mag":
                 if (splitted.length == 2) {
-                    double answer = ComplexNumber.magnitude();
+                    double answer = accumulator.magnitude();
                     System.out.println(answer);
                 } else if (splitted.length > 2) {
-                    double answer = ComplexNumber.magnitude(splitted[2]);
+                    double answer = new ComplexNumber(splitted[splitted.length-1]).magnitude();
                     System.out.println(answer);
                 }
-
-                break;
+                return ;
+                //break;
             case "cnj":
+                 if (splitted.length == 2) {
+                    result = accumulator.conjugate();
+                } else if (splitted.length > 2) {
+                    result = new ComplexNumber(splitted[2]).conjugate();
+                }
                 break;
             case "ang":
-                break;
+                double answer = 0;
+                if (splitted.length == 2) {
+                    answer = accumulator.getAngle();
+                } else if (splitted.length > 2) {
+                    answer = new ComplexNumber(splitted[2]).getAngle();
+                }
+                System.out.println(answer);
+                return ;
+                //break;
             // Contain a Complex number
             case "A Complex number":
                 break;
             case "end":
                 break;
-            default:
-                break;
         }
-
-        ComplexNumber complex1 = new ComplexNumber(2, -3);
-
-        System.out.println(complex1);
-        System.out.println(complex1.conjugate());
-    }    
+        System.out.println(result.toString());
+    }
 }
