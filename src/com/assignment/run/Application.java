@@ -1,6 +1,6 @@
-package com.jerryassignment.run;
+package com.assignment.run;
 
-import com.jerryassignment.model.ComplexNumber;
+import com.assignment.model.ComplexNumber;
 import java.util.Scanner;
 
 /**

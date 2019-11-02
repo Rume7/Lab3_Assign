@@ -1,4 +1,4 @@
-package com.jerryassignment.model;
+package com.assignment.model;
 
 /**
  *
