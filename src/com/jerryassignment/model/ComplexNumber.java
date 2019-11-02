@@ -28,7 +28,11 @@ public class ComplexNumber {
         // Get the index of j
         int indexOfJ = complexNum.indexOf("j");
         this.imaginaryPart = Double.parseDouble(complexNum.substring(indexOfJ+1));
-        this.realPart = Double.parseDouble(complexNum.substring(0, indexOfJ-1));
+        if (indexOfJ != 0) {
+            this.realPart = Double.parseDouble(complexNum.substring(0, indexOfJ-1));
+        } else {
+            this.realPart = 0;
+        }
         angleOfNumber = Math.atan2(this.imaginaryPart, this.realPart);
         double sumOfSquares = Math.pow(realPart, 2) + Math.pow(imaginaryPart, 2);
         magnitudeOfNumber = Math.sqrt(sumOfSquares);
@@ -170,8 +174,8 @@ public class ComplexNumber {
         double totalMag = this.magnitudeOfNumber / magnitude;
         double totalAngle = this.angleOfNumber - angle;
 
-        double realPart1 = totalMag * Math.sin(totalAngle);             // Endeavour to set angle in radians
-        double imgPart1 = totalMag * Math.cos(totalAngle);           // Endeavour to set angle in radians
+        double realPart1 = totalMag * Math.sin(totalAngle);             // Angle to be set in radians
+        double imgPart1 = totalMag * Math.cos(totalAngle);           // Angle to be set in radians
 
         ComplexNumber complexNum = new ComplexNumber(realPart1, imgPart1);
         return complexNum;
@@ -183,13 +187,22 @@ public class ComplexNumber {
      * @return the answer in Complex Number
      */
     public ComplexNumber divide(ComplexNumber complexNumber) {
-        double denominator = (this.realPart * complexNumber.realPart) - (this.imaginaryPart * complexNumber.imaginaryPart);
+        double denominator = this.multiply(complexNumber.conjugate()).realPart;
+        //double denominator = (this.realPart * complexNumber.realPart) + (this.imaginaryPart * complexNumber.imaginaryPart);
         ComplexNumber complexResult = this.multiply(complexNumber);
         double real2 = complexResult.realPart / denominator;
         double imag2 = complexResult.imaginaryPart / denominator;
         return new ComplexNumber(real2, imag2);
     }
 
+    public ComplexNumber divide2(ComplexNumber complexNumber) {
+        double denominator = (this.realPart * complexNumber.realPart) + (this.imaginaryPart * complexNumber.imaginaryPart);
+        ComplexNumber complexResult = this.multiply(complexNumber);
+        double real2 = complexResult.realPart / denominator;
+        double imag2 = complexResult.imaginaryPart / denominator;
+        return new ComplexNumber(real2, imag2);
+    }
+    
     @Override
     public String toString() {
         if (this.imaginaryPart < 0) {
