@@ -5,16 +5,15 @@ import java.util.Scanner;
 
 /**
  *
- * @author Jerry Momodu
+ * @author Rhume
  */
 public class Application {
 
+    private static Scanner input = new Scanner(System.in);
     private static ComplexNumber accumulator = new ComplexNumber(0, 0);
     private static ComplexNumber result;
 
     public static void main(String[] args) {
-
-        Scanner input = new Scanner(System.in);
         String console = input.nextLine();
 
         String[] splitted = console.split(" ");

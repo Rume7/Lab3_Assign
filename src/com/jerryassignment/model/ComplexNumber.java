@@ -2,7 +2,7 @@ package com.jerryassignment.model;
 
 /**
  *
- * @author Jerry Momodu
+ * @author Rhume
  */
 public class ComplexNumber {
     
