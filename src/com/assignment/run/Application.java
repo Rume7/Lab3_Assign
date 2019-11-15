@@ -4,7 +4,6 @@ import com.assignment.model.ComplexNumber;
 import java.util.Scanner;
 
 /**
- *
  * @author Rhume
  */
 public class Application {
